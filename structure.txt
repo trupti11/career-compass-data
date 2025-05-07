@@ -1,0 +1,44 @@
+soc_code : string,
+title: string,
+description: string,
+salary : {
+    <year> : {
+        <state> :
+        {
+            <industry> : 
+            {
+                A_MEDIAN: float,
+                M_PCT10: float,
+                M_MEDIAN: float,
+                M_PCT90: float
+            }
+        },
+        ...
+        <state> :
+        {
+            <industry> : 
+            {
+                A_MEDIAN: float,
+                M_PCT10: float,
+                M_MEDIAN: float,
+                M_PCT90: float
+            }
+        }
+    }
+},
+education: 
+{
+    LESS_THAN_HS : string,
+    HIGH_SCHOOL: string,
+    ASSOCIATE: string,
+    BACHELOR: string,
+    MASTERS:string,
+    DOCTORATE: string,
+    NO_REQ: string,
+    PROFESSIONAL: string
+},
+typicalSkills:
+[
+    string,
+    string
+]

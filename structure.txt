@@ -42,3 +42,42 @@ typicalSkills:
     string,
     string
 ]
+
+
+
+
+11-0000, 
+"Managing Operations"
+salary => {
+    2016 => {
+        "U.S." => {
+            "ind1" => {a_median, m_median, m_pct10, m_pct90}
+            "ind2" => {a_median, m_median, m_pct10, m_pct90}
+            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
+            ...
+        },
+        "Alabama" => {
+            "ind1" => {a_median, m_median, m_pct10, m_pct90}
+            "ind2" => {a_median, m_median, m_pct10, m_pct90}
+            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
+            ...
+        },
+        ...
+    },
+    2017 => {
+        "U.S." => {
+            "ind1" => {a_median, m_median, m_pct10, m_pct90}
+            "ind2" => {a_median, m_median, m_pct10, m_pct90}
+            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
+            ...
+        },
+        "Alabama" => {
+            "ind1" => {a_median, m_median, m_pct10, m_pct90}
+            "ind2" => {a_median, m_median, m_pct10, m_pct90}
+            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
+            ...
+        },
+        ...
+    }
+    ...
+}

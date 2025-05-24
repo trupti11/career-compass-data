@@ -1,83 +1,75 @@
-soc_code : string,
-title: string,
-description: string,
-salary : {
-    <year> : {
-        <state> :
-        {
-            <industry> : 
-            {
-                A_MEDIAN: float,
-                M_PCT10: float,
-                M_MEDIAN: float,
-                M_PCT90: float
-            }
-        },
-        ...
-        <state> :
-        {
-            <industry> : 
-            {
-                A_MEDIAN: float,
-                M_PCT10: float,
-                M_MEDIAN: float,
-                M_PCT90: float
-            }
-        }
-    }
-},
-education: 
-{
-    LESS_THAN_HS : string,
-    HIGH_SCHOOL: string,
-    ASSOCIATE: string,
-    BACHELOR: string,
-    MASTERS:string,
-    DOCTORATE: string,
-    NO_REQ: string,
-    PROFESSIONAL: string
-},
-typicalSkills:
-[
-    string,
-    string
-]
 
+  chat: a.conversation({
+    aiModel: a.ai.model("Claude 3.5 Haiku"),
+    systemPrompt: prompt,
+    tools: [
+      a.ai.dataTool({
+        // The name of the tool as it will be referenced in the message to the LLM
+        name: 'socQuery',
+        // The description of the tool provided to the LLM.
+        // Use this to help the LLM understand when to use the tool.
+        description: "Returns a list of all available careers and SOC codes. Use this tool to find matching careers based on the user's profile. All career suggestions must come from this list.",
+        // A reference to the `a.model()` that the tool will use
+        model: a.ref('socCodes'),
+        // The operation to perform on the model
+        modelOperation: 'list',
+      }),
+    ],
+    
+  }).authorization(allow => allow.owner()),
 
+  socCodes: a.model({
+    occ_code: a.string().required(),
+    occ_title: a.string(),
+  })
+  .identifier(['occ_code']) // Primary key
+  .authorization(allow => allow.authenticated()),
 
+  careerDescription: a.model({
+    occ_code: a.string().required(),
+    description: a.string(),
+  })
+  .identifier(['occ_code']) // Primary key
+  .authorization(allow => allow.authenticated()),
 
-11-0000, 
-"Managing Operations"
-salary => {
-    2016 => {
-        "U.S." => {
-            "ind1" => {a_median, m_median, m_pct10, m_pct90}
-            "ind2" => {a_median, m_median, m_pct10, m_pct90}
-            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
-            ...
-        },
-        "Alabama" => {
-            "ind1" => {a_median, m_median, m_pct10, m_pct90}
-            "ind2" => {a_median, m_median, m_pct10, m_pct90}
-            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
-            ...
-        },
-        ...
-    },
-    2017 => {
-        "U.S." => {
-            "ind1" => {a_median, m_median, m_pct10, m_pct90}
-            "ind2" => {a_median, m_median, m_pct10, m_pct90}
-            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
-            ...
-        },
-        "Alabama" => {
-            "ind1" => {a_median, m_median, m_pct10, m_pct90}
-            "ind2" => {a_median, m_median, m_pct10, m_pct90}
-            "cross-industry" => {a_median, m_median, m_pct10, m_pct90}
-            ...
-        },
-        ...
-    }
-    ...
-}
+  careerEducation: a.model({
+    occ_code: a.string().required(),
+    less_than_hs: a.string(),
+    hs_or_eq: a.string(),
+    associate_degree: a.string(),
+    bachelor_degree: a.string(),
+    master_degree: a.string(),
+    doctorate_degree: a.string(),
+    no_requirement: a.string(),
+    professional_degree: a.string(),
+  })
+  .identifier(['occ_code']) // Primary key
+  .authorization(allow => allow.authenticated()),
+
+  careerSkills: a.model({
+    occ_code: a.string().required(),
+    skills: a.json(),
+  })
+  .identifier(['occ_code']) // Primary key
+  .authorization(allow => allow.authenticated()),
+
+  careerSalary: a.model({
+    occ_code: a.string().required(),
+    salary_key: a.string().required(),
+    a_median: a.float(),
+    m_median: a.float(),
+    m_pct10: a.float(),
+    m_pct90: a.float(),
+  })
+  .identifier(['occ_code']) // Primary key
+  .authorization((allow) => [allow.authenticated()]),
+
+  userProfile: a.model({
+    userId: a.string().required(),
+    profileId: a.string().required(), // unique per summary
+    timestamp: a.timestamp(),     // just for display/sorting
+    insights: a.string(),
+    careerSuggestions: a.string(),
+  })
+  .identifier(['userId', 'profileId']) 
+  .authorization(allow => allow.authenticated()),

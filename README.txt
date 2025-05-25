@@ -13,5 +13,10 @@
   - filter by the id in step #5
   - confirm your tables are all there from resource.ts
 7. In the careerCompass.ipynb, please replace this id from #6: API_ID = "alek4h7jlreffeoe5tocxgnx2u" in the top script and run all the populate data
-
+8. Create a folder called Datasets on the main level and download all the files in this drive to it: https://drive.google.com/drive/folders/1fCwNm1LR6whsKwBTeCTHtisXiJhbJi6u
 Run the script! :) 
+
+Setting up python:
+
+Packages I have installed under Python:
+pip install -r requirements.txt
